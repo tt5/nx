@@ -1,1 +1,3 @@
 nx format:write --all
+npx nx g @andyjessop/cloudflare:worker content
+nx deploy content
