@@ -9,7 +9,7 @@ app.get('/', (c) => {
   //c.header('Cache-Control', 'private, max-age=60')
   return c.html(
     html`<h1
-      x-data="{ message: 'nav2' }"
+      x-data="{ message: 'nav11' }"
       x-text="message"
     ></h1>`
   );

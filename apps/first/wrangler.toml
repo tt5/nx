@@ -6,3 +6,9 @@ compatibility_date = "2022-05-18"
 
 [build]
 command = "node build.mjs; nx build first"
+
+[[r2_buckets]]
+binding = 'MY_BUCKET'
+bucket_name = 'mybucket'
+preview_bucket_name = 'mybucket'
+

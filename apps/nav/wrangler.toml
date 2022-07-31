@@ -1,8 +1,8 @@
 name = "nav"
 account_id = ""
 workers_dev = true
-main = "./src/index.ts"
+main = "./dist/index.js"
 compatibility_date = "2022-05-18"
 
 [build]
-command = "nx build nav"
+command = "node build.mjs; nx build content"
