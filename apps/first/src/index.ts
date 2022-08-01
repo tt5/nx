@@ -23,7 +23,7 @@ if (!indexCss) return c.notFound();
           <style>${indexCss}</style>
           <script
             defer
-            src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"
+            src="/services/alpinejs"
           ></script>
         </head>
         <body class="cyan p-2">
@@ -36,7 +36,7 @@ if (!indexCss) return c.notFound();
           </nav>
           <main
             x-data="{data: '...loading'}"
-            x-init="data = await (await fetch('https://content.tt5.workers.dev')).text();
+            x-init="data = await (await fetch('https://hello123.tk/services/content')).text();
   "
           >
             <span x-html="data"></span>
