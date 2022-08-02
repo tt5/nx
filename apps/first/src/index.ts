@@ -38,10 +38,10 @@ if (!indexCss) return c.notFound();
           <main
             class="flex-grow overflow-scroll overflow-x-hidden"
             x-data="{data: '...loading'}"
-            x-init="data = await (await fetch('https://hello123.tk/services/content')).text();
+            x-init="data = await (await fetch('https://hello123.tk/services/content/home')).text();
   "
           >
-            <span x-html="data"></span>
+            <div id="content" x-html="data"></div>
           </main>
           <footer
             class="max-h-[3rem] blue"
