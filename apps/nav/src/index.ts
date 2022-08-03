@@ -25,6 +25,7 @@ app.get('/', (c) => {
       if (!present) {
         datab = await (await fetch('https://hello123.tk/services/content/chess')).text();
       };
+      $store.contentCurrent = 'chess';
       "
     >Chess
       <span x-html="datab"></span>
@@ -39,6 +40,7 @@ app.get('/', (c) => {
       if (!present) {
         datab = await (await fetch('https://hello123.tk/services/content/math')).text();
       };
+      $store.contentCurrent = 'math';
       "
     >Math
       <span x-html="datab"></span>
@@ -53,6 +55,7 @@ app.get('/', (c) => {
       if (!present) {
         datab = await (await fetch('https://hello123.tk/services/content/notes')).text();
       };
+      $store.contentCurrent = 'notes';
       "
       >Notes
       <span x-html="datab"></span>

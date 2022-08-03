@@ -46,6 +46,11 @@ if (!indexCss) return c.notFound();
           <footer
             class="max-h-[3rem] blue"
           >footer</footer>
+          <script>
+            document.addEventListener('alpine:init', () => {
+              Alpine.store('contentCurrent', 'home')
+            })
+          </script>
         </body>
       </html> `
   );
