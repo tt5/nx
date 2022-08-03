@@ -28,7 +28,7 @@ if (!indexCss) return c.notFound();
         </head>
         <body class="cyan min-h-screen max-h-screen flex flex-col">
           <nav
-            class="h-[3rem] blue"
+            class="px-2 py-4 h-[3rem] blue"
             x-data="{data: '...loading'}"
             x-init="data = await (await fetch('https://hello123.tk/services/nav')).text();
   "
@@ -44,8 +44,8 @@ if (!indexCss) return c.notFound();
             <div id="content" x-html="data"></div>
           </main>
           <footer
-            class="max-h-[3rem] blue"
-          >footer</footer>
+            class="min-h-[1rem] max-h-[1rem] blue"
+          ></footer>
           <script>
             document.addEventListener('alpine:init', () => {
               Alpine.store('contentCurrent', 'home')

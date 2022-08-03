@@ -14,8 +14,9 @@ app.get('/', (c) => {
     nav-left
   </div>
   <div class="flex-grow"></div>
-  <div class="flex">
+  <div class="flex gap-2">
     <button
+      :class="$store.contentCurrent=='chess' ? 'button bg-white' : 'button cyan'"
       x-data="{datab: '<span></span>', children: {}, present: false}"
       @click="
       children = document.querySelector('#content').childNodes;
@@ -31,6 +32,7 @@ app.get('/', (c) => {
       <span x-html="datab"></span>
     </button>
     <button
+      :class="$store.contentCurrent=='math' ? 'button bg-white' : 'button cyan'"
       x-data="{datab: '<span></span>', children: {}, present: false}"
       @click="
       children = document.querySelector('#content').childNodes;
@@ -46,6 +48,7 @@ app.get('/', (c) => {
       <span x-html="datab"></span>
     </button>
     <button
+      :class="$store.contentCurrent=='notes' ? 'button bg-white' : 'button cyan'"
       x-data="{datab: '<span></span>', children: {}, present: false}"
       @click="
       children = document.querySelector('#content').childNodes;
