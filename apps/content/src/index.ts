@@ -68,6 +68,8 @@ app.get('/chess', (c) => {
 		squareDim: 50,
 		darkPiece: 'black',
 		lightPiece: 'white',
+		darkSquare: 'rgb(150, 150, 150)',
+		lightSquare: 'rgb(240, 240, 240)',
 		pieceVerticalOffset: 7,
 		boardState: [
 			['br', 'bp', '', '', '', '', 'wp', 'wr'],
@@ -79,14 +81,24 @@ app.get('/chess', (c) => {
 			['bk', 'bp', '', '', '', '', 'wp', 'wk'],
 			['br', 'bp', '', '', '', '', 'wp', 'wr'],
 		],
-		lastPosX: 0,
-		lastposY: 0,
+    activeField: [9,9],
 		holding: '',
 		chessPiece: ''
 	}"
 	@mousedown="
 		lastPosX = Math.floor($event.offsetX/50);
 		lastPosY = Math.floor($event.offsetY/50);
+    console.log('lastPos',lastPosX,lastPosY);
+    console.log('activeField',activeField[0], activeField[1]);
+    if (activeField[0] == lastPosX && activeField[1] == lastPosY) {
+      activeField[0] = 9;
+      activeField[1] = 9;
+    } else {
+    activeField[0] = lastPosX;
+    activeField[1] = lastPosY;
+      pieces.fillStyle = 'yellow';
+      pieces.fillRect(lastPosX*squareDim, lastPosY*squareDim, squareDim, squareDim);
+    }
 		drag = [boardState[lastPosX][lastPosY], lastPosX, lastPosY];
     if (boardState[lastPosX][lastPosY]!='') {
 		boardState[lastPosX][lastPosY] = '';
@@ -107,23 +119,15 @@ app.get('/chess', (c) => {
 						case 'K': chessPiece = '\u265a'; break;
 						default: break;
 					};
-		console.log('mousedown', drag);
-		pieces.clearRect(lastPosX*squareDim, lastPosY*squareDim, squareDim, squareDim);
+		pieces.clearRect(lastPosX*squareDim+5, lastPosY*squareDim+5, squareDim-10, squareDim-10);
 					dragPiece.fillText(chessPiece, $event.offsetX, $event.offsetY - pieceVerticalOffset + 25);
 					dragPiece.strokeText(chessPiece, $event.offsetX, $event.offsetY - pieceVerticalOffset + 25);
     move = (e) => {
+    activeField[0] = 9;
+    activeField[1] = 9;
 		pieces.clearRect(lastPosX*squareDim, lastPosY*squareDim, squareDim, squareDim);
 		nowX = Math.floor(e.offsetX/50);
 		nowY = Math.floor(e.offsetY/50);
-console.log(nowX, nowY);
-
-====
-TODO:
-get this field, and save
-pieces: clear field
-dragPiece: paint it too
-on leave field: restore
-====
 
 		dragPiece.clearRect(0, 0, $el.width, $el.height);
 					dragPiece.fillText(chessPiece, e.offsetX, e.offsetY - pieceVerticalOffset + 25);
@@ -133,26 +137,33 @@ on leave field: restore
     }
 	"
 	@mouseup="
-		console.log('mouseup',  drag);
+    console.log('up lastPos',lastPosX,lastPosY);
+    console.log('up activeField',activeField[0], activeField[1]);
     $el.removeEventListener('mousemove', move);
 		dragPiece.clearRect(0, 0, $el.width, $el.height);
 		if (drag[0] != '') {
 			let x = Math.floor(($event.offsetX)/squareDim);
 			let y = Math.floor(($event.offsetY)/squareDim);
-console.log(x,y, boardState);
 			if (boardState[x][y][0] != drag[0][0]) {
 				boardState[x][y] = '';
 			}
 			if (boardState[x][y][0] == drag[0][0]) {
-console.log('yes');
 				[drag[0], boardState[lastPosX][lastPosY]] = ['', drag[0]];
 			} else {
-console.log('no');
 				[drag[0], boardState[x][y]] = ['', drag[0]];
 			}
-		console.log('mouseup2',drag);
 
 		pieces.clearRect(0, 0, $el.width, $el.height);
+    if (activeField[0] == lastPosX && activeField[1] == lastPosY) {
+      pieces.fillStyle = 'yellow';
+      pieces.fillRect(lastPosX*squareDim, lastPosY*squareDim, squareDim, squareDim);
+					if (((x + y*8 - y) % 2) == 1) {
+						pieces.fillStyle = darkSquare;
+					} else {
+						pieces.fillStyle = lightSquare;
+					};
+      pieces.fillRect(lastPosX*squareDim+5, lastPosY*squareDim+5, squareDim-10, squareDim-10);
+    } else { }
 			for (let i = 0; i < 8; i++) {
 				for (let j = 0; j < 8; j++) {
 					if (boardState[i][j][0] == 'b') {
