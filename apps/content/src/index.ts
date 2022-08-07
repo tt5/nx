@@ -88,8 +88,7 @@ app.get('/chess', (c) => {
 	@mousedown="
 		lastPosX = Math.floor($event.offsetX/50);
 		lastPosY = Math.floor($event.offsetY/50);
-    console.log('lastPos',lastPosX,lastPosY);
-    console.log('activeField',activeField[0], activeField[1]);
+    if (boardState[lastPosX][lastPosY]!='') {
     if (activeField[0] == lastPosX && activeField[1] == lastPosY) {
       activeField[0] = 9;
       activeField[1] = 9;
@@ -100,7 +99,6 @@ app.get('/chess', (c) => {
       pieces.fillRect(lastPosX*squareDim, lastPosY*squareDim, squareDim, squareDim);
     }
 		drag = [boardState[lastPosX][lastPosY], lastPosX, lastPosY];
-    if (boardState[lastPosX][lastPosY]!='') {
 		boardState[lastPosX][lastPosY] = '';
 					if (drag[0][0] == 'b') {
 						dragPiece.fillStyle = darkPiece;
@@ -123,22 +121,84 @@ app.get('/chess', (c) => {
 					dragPiece.fillText(chessPiece, $event.offsetX, $event.offsetY - pieceVerticalOffset + 25);
 					dragPiece.strokeText(chessPiece, $event.offsetX, $event.offsetY - pieceVerticalOffset + 25);
     move = (e) => {
-    activeField[0] = 9;
-    activeField[1] = 9;
-		pieces.clearRect(lastPosX*squareDim, lastPosY*squareDim, squareDim, squareDim);
-		nowX = Math.floor(e.offsetX/50);
-		nowY = Math.floor(e.offsetY/50);
-
-		dragPiece.clearRect(0, 0, $el.width, $el.height);
-					dragPiece.fillText(chessPiece, e.offsetX, e.offsetY - pieceVerticalOffset + 25);
-					dragPiece.strokeText(chessPiece, e.offsetX, e.offsetY - pieceVerticalOffset + 25);
+      activeField[0] = 9;
+      activeField[1] = 9;
+      pieces.clearRect(lastPosX*squareDim, lastPosY*squareDim, squareDim, squareDim);
+      nowX = Math.floor(e.offsetX/50);
+      nowY = Math.floor(e.offsetY/50);
+			for (let i = 0; i < 8; i++) {
+				for (let j = 0; j < 8; j++) {
+          if (((i + j*8 - j) % 2) == 1) {
+            pieces.fillStyle = darkSquare;
+          } else {
+            pieces.fillStyle = lightSquare;
+          };
+					pieces.fillRect(i*squareDim, j*squareDim, squareDim, squareDim );
+					if (boardState[i][j][0] == 'b') {
+						pieces.fillStyle = darkPiece;
+					} else {
+						pieces.fillStyle = lightPiece;
+					};
+					chessPieceA = '';
+					switch (boardState[i][j][1]) {
+						case 'p': chessPieceA = '\u265f'; break;
+						case 'r': chessPieceA = '\u265c'; break;
+						case 'k': chessPieceA = '\u265e'; break;
+						case 'b': chessPieceA = '\u265d'; break;
+						case 'q': chessPieceA = '\u265b'; break;
+						case 'K': chessPieceA = '\u265a'; break;
+						default: break;
+					};
+					pieces.fillText(chessPieceA, i*squareDim + squareDim/2, j*squareDim + squareDim - pieceVerticalOffset);
+					pieces.strokeText(chessPieceA, i*squareDim + squareDim/2, j*squareDim + squareDim - pieceVerticalOffset);
+				};
+			};
+      pieces.fillStyle = 'yellow';
+      pieces.fillRect(nowX*squareDim, nowY*squareDim, squareDim, squareDim);
+      if (((nowX + nowY*8 - nowY) % 2) == 1) {
+        pieces.fillStyle = darkSquare;
+      } else {
+        pieces.fillStyle = lightSquare;
       };
-    $el.addEventListener('mousemove', move);
+      pieces.fillRect(nowX*squareDim+5, nowY*squareDim+5, squareDim-10, squareDim-10);
+
+      dragPiece.clearRect(0, 0, $el.width, $el.height);
+      if (boardState[nowX][nowY] != '') {
+					if (boardState[nowX][nowY][0] == 'b') {
+						pieces.fillStyle = darkPiece;
+					} else {
+						pieces.fillStyle = lightPiece;
+					};
+					chessPieceB = '';
+					switch (boardState[nowX][nowY][1]) {
+						case 'p': chessPieceB = '\u265f'; break;
+						case 'r': chessPieceB = '\u265c'; break;
+						case 'k': chessPieceB = '\u265e'; break;
+						case 'b': chessPieceB = '\u265d'; break;
+						case 'q': chessPieceB = '\u265b'; break;
+						case 'K': chessPieceB = '\u265a'; break;
+						default: break;
+					};
+					pieces.fillText(chessPieceB, nowX*squareDim + squareDim/2, nowY*squareDim + squareDim - pieceVerticalOffset);
+					pieces.strokeText(chessPieceB, nowX*squareDim + squareDim/2, nowY*squareDim + squareDim - pieceVerticalOffset);
+      };
+					if (drag[0][0] == 'b') {
+						dragPiece.fillStyle = darkPiece;
+						pieces.fillStyle = darkPiece;
+					} else {
+						dragPiece.fillStyle = lightPiece;
+						pieces.fillStyle = lightPiece;
+					};
+            dragPiece.fillText(chessPiece, e.offsetX, e.offsetY - pieceVerticalOffset + 25);
+            dragPiece.strokeText(chessPiece, e.offsetX, e.offsetY - pieceVerticalOffset + 25);
+            pieces.fillText(chessPiece, e.offsetX, e.offsetY - pieceVerticalOffset + 25);
+            pieces.strokeText(chessPiece, e.offsetX, e.offsetY - pieceVerticalOffset + 25);
+
+        };
+      $el.addEventListener('mousemove', move);
     }
 	"
 	@mouseup="
-    console.log('up lastPos',lastPosX,lastPosY);
-    console.log('up activeField',activeField[0], activeField[1]);
     $el.removeEventListener('mousemove', move);
 		dragPiece.clearRect(0, 0, $el.width, $el.height);
 		if (drag[0] != '') {
