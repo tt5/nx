@@ -32,8 +32,21 @@ app.get('/chess', (c) => {
 	x-data="{
 		board: {}, 
 		squareDim: 50,
+		pieceVerticalOffset: 7,
 		darkSquare: 'rgb(150, 150, 150)',
 		lightSquare: 'rgb(240, 240, 240)',
+		darkPiece: 'black',
+		lightPiece: 'white',
+		boardState: [
+			['br', 'bp', '', '', '', '', 'wp', 'wr'],
+			['bk', 'bp', '', '', '', '', 'wp', 'wk'],
+			['bb', 'bp', '', '', '', '', 'wp', 'wb'],
+			['bq', 'bp', '', '', '', '', 'wp', 'wq'],
+			['bK', 'bp', '', '', '', '', 'wp', 'wK'],
+			['bb', 'bp', '', '', '', '', 'wp', 'wb'],
+			['bk', 'bp', '', '', '', '', 'wp', 'wk'],
+			['br', 'bp', '', '', '', '', 'wp', 'wr'],
+		],
 	}"
 	x-init="
 		board = $el.getContext('2d');
@@ -47,6 +60,33 @@ app.get('/chess', (c) => {
 				board.fillRect(i*squareDim, j*squareDim, squareDim, squareDim);
 			}
 		};
+
+		board.lineWidth = 2;
+		board.textAlign = 'center';
+		board.lineWidth = 2;
+		board.font = '50px DejaVu';
+		board.textAlign = 'center';
+			for (let i = 0; i < 8; i++) {
+				for (let j = 0; j < 8; j++) {
+					if (boardState[i][j][0] == 'b') {
+						board.fillStyle = darkPiece;
+					} else {
+						board.fillStyle = lightPiece;
+					};
+					chessPieceA = '';
+					switch (boardState[i][j][1]) {
+						case 'p': chessPieceA = '\u265f'; break;
+						case 'r': chessPieceA = '\u265c'; break;
+						case 'k': chessPieceA = '\u265e'; break;
+						case 'b': chessPieceA = '\u265d'; break;
+						case 'q': chessPieceA = '\u265b'; break;
+						case 'K': chessPieceA = '\u265a'; break;
+						default: break;
+					};
+					board.fillText(chessPieceA, i*squareDim + squareDim/2, j*squareDim + squareDim - pieceVerticalOffset);
+					board.strokeText(chessPieceA, i*squareDim + squareDim/2, j*squareDim + squareDim - pieceVerticalOffset);
+				};
+      };
   "
 >
 </canvas>
@@ -83,12 +123,59 @@ app.get('/chess', (c) => {
 		],
     activeField: [9,9],
 		holding: '',
-		chessPiece: ''
+		chessPiece: '',
+    move(){},
+    drag: [0,0,0],
 	}"
 	@mousedown="
 		lastPosX = Math.floor($event.offsetX/50);
 		lastPosY = Math.floor($event.offsetY/50);
-    if (boardState[lastPosX][lastPosY]!='') {
+			for (let i = 0; i < 8; i++) {
+				for (let j = 0; j < 8; j++) {
+					if (boardState[i][j][0] == 'b') {
+						pieces.fillStyle = darkPiece;
+					} else {
+						pieces.fillStyle = lightPiece;
+					};
+					chessPieceC = '';
+					switch (boardState[i][j][1]) {
+						case 'p': chessPieceC = '\u265f'; break;
+						case 'r': chessPieceC = '\u265c'; break;
+						case 'k': chessPieceC = '\u265e'; break;
+						case 'b': chessPieceC = '\u265d'; break;
+						case 'q': chessPieceC = '\u265b'; break;
+						case 'K': chessPieceC = '\u265a'; break;
+						default: break;
+					};
+					pieces.fillText(chessPieceC, i*squareDim + squareDim/2, j*squareDim + squareDim - pieceVerticalOffset);
+					pieces.strokeText(chessPieceC, i*squareDim + squareDim/2, j*squareDim + squareDim - pieceVerticalOffset);
+				};
+      };
+
+    if (boardState[lastPosX][lastPosY][0]=='w') {
+    console.log('(mousedown) show legal moves for piece: ');
+					switch (boardState[lastPosX][lastPosY][1]) {
+						case 'p':
+              console.log('pawn');
+              if (boardState[lastPosX][lastPosY-1]=='') {
+                pieces.fillStyle = 'black';
+                pieces.fillRect(lastPosX*squareDim, (lastPosY-1)*squareDim, squareDim, squareDim);
+                if (((lastPosX + (lastPosY-1)*8 - (lastPosY-1)) % 2) == 1) {
+                  pieces.fillStyle = darkSquare;
+                } else {
+                  pieces.fillStyle = lightSquare;
+                };
+                pieces.fillRect(lastPosX*squareDim+5, (lastPosY-1)*squareDim+5, squareDim-10, squareDim-10);
+              }
+              break;
+						case 'r': console.log('rook'); break;
+						case 'k': console.log('knight'); break;
+						case 'b': console.log('bishop'); break;
+						case 'q': console.log('queen'); break;
+						case 'K': console.log('king'); break;
+						default: break;
+					};
+    console.log('at position: ',lastPosX, lastPosY);
     if (activeField[0] == lastPosX && activeField[1] == lastPosY) {
       activeField[0] = 9;
       activeField[1] = 9;
@@ -121,6 +208,7 @@ app.get('/chess', (c) => {
 					dragPiece.fillText(chessPiece, $event.offsetX, $event.offsetY - pieceVerticalOffset + 25);
 					dragPiece.strokeText(chessPiece, $event.offsetX, $event.offsetY - pieceVerticalOffset + 25);
     move = (e) => {
+      console.log('(mousemove) show legal moves for <piece> at position', lastPosX, lastPosY);
       activeField[0] = 9;
       activeField[1] = 9;
       pieces.clearRect(lastPosX*squareDim, lastPosY*squareDim, squareDim, squareDim);
@@ -200,7 +288,20 @@ app.get('/chess', (c) => {
 	"
 	@mouseup="
     $el.removeEventListener('mousemove', move);
+
 		dragPiece.clearRect(0, 0, $el.width, $el.height);
+
+		for (let i=0; i<8; i++) {
+			for (let j=0; j<8; j++) {
+				if (i % 2 == j % 2) {
+					dragPiece.fillStyle = lightSquare;
+				} else {
+					dragPiece.fillStyle = darkSquare;
+				}
+				dragPiece.fillRect(i*squareDim, j*squareDim, squareDim, squareDim);
+			}
+		};
+
 		if (drag[0] != '') {
 			let x = Math.floor(($event.offsetX)/squareDim);
 			let y = Math.floor(($event.offsetY)/squareDim);
