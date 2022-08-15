@@ -6,8 +6,6 @@
 
 - jsx
 
-- ship chessfont
-
 - legal moves for R, N, B, Q, K. Check for doublecheck, check (can the active piece stop the check?) and pin
 
 - when move is finnished wait for opponents move
@@ -15,5 +13,3 @@
 - show last played move
 
 - reset board button
-
-- move chessboard, cursor offset

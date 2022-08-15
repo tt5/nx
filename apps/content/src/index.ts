@@ -103,7 +103,17 @@ app.get('/chess', (c) => {
     html`
 <template x-teleport="#content">
 <div id="content-chess" x-show="$store.contentCurrent == 'chess'">
-
+<p>some</p>
+<span style="
+display: inline-block;
+min-height: 400px">some</span>
+<span
+style="
+  position: relative;
+  height: 400px;
+  width: 400px;
+"
+>
 <canvas
 	style="
 		position: absolute;
@@ -427,6 +437,7 @@ app.get('/chess', (c) => {
 	"
 >
 </canvas>
+</span>
 </div>
 </template>
     `
