@@ -9,7 +9,19 @@ app.use('*', cors());
 app.get('/home', (c) => {
   //c.header('Cache-Control', 'private, max-age=60')
   return c.html(
-    html`<div id="content-home" x-show="$store.contentCurrent == 'home'">content-home<div>`
+    html`
+    <div
+      id="content-home" x-show="$store.contentCurrent == 'home'"
+    >
+      <p style="
+        font-family: 'alpha2';
+      ">
+        ijklmn<br>
+        IJKLMN
+      </p>
+      content-home
+    <div>
+    `
   );
 });
 
@@ -42,12 +54,12 @@ app.get('/chess', (c) => {
 					};
 					chessPieceA = '';
 					switch (boardState[i][j][1]) {
-						case 'p': chessPieceA = '\u265f'; break;
-						case 'r': chessPieceA = '\u265c'; break;
-						case 'k': chessPieceA = '\u265e'; break;
-						case 'b': chessPieceA = '\u265d'; break;
-						case 'q': chessPieceA = '\u265b'; break;
-						case 'K': chessPieceA = '\u265a'; break;
+						case 'p': chessPieceA = 'I'; break;
+						case 'r': chessPieceA = 'L'; break;
+						case 'k': chessPieceA = 'K'; break;
+						case 'b': chessPieceA = 'J'; break;
+						case 'q': chessPieceA = 'M'; break;
+						case 'K': chessPieceA = 'N'; break;
 						default: break;
 					};
 					ctx.fillText(chessPieceA, i*squareDim + squareDim/2, j*squareDim + squareDim - pieceVerticalOffset);
@@ -75,12 +87,12 @@ app.get('/chess', (c) => {
 					};
 					chessPieceB = '';
 					switch (boardState[ctxX][ctxY][1]) {
-						case 'p': chessPieceB = '\u265f'; break;
-						case 'r': chessPieceB = '\u265c'; break;
-						case 'k': chessPieceB = '\u265e'; break;
-						case 'b': chessPieceB = '\u265d'; break;
-						case 'q': chessPieceB = '\u265b'; break;
-						case 'K': chessPieceB = '\u265a'; break;
+						case 'p': chessPieceB = 'I'; break;
+						case 'r': chessPieceB = 'L'; break;
+						case 'k': chessPieceB = 'K'; break;
+						case 'b': chessPieceB = 'J'; break;
+						case 'q': chessPieceB = 'M'; break;
+						case 'K': chessPieceB = 'N'; break;
 						default: break;
 					};
 					pieces.fillText(chessPieceB, ctxX*squareDim + squareDim/2, ctxY*squareDim + squareDim - pieceVerticalOffset);
@@ -148,7 +160,7 @@ app.get('/chess', (c) => {
 		board.lineWidth = 2;
 		board.textAlign = 'center';
 		board.lineWidth = 2;
-		board.font = '50px DejaVu';
+		board.font = '50px alpha2';
 		board.textAlign = 'center';
     ctx = board;
     ${drawBoardState}
@@ -261,12 +273,12 @@ app.get('/chess', (c) => {
     
     chessPiece = '';
     switch (drag[1]) {
-      case 'p': chessPiece = '\u265f'; break;
-      case 'r': chessPiece = '\u265c'; break;
-      case 'k': chessPiece = '\u265e'; break;
-      case 'b': chessPiece = '\u265d'; break;
-      case 'q': chessPiece = '\u265b'; break;
-      case 'K': chessPiece = '\u265a'; break;
+      case 'p': chessPiece = 'I'; break;
+      case 'r': chessPiece = 'L'; break;
+      case 'k': chessPiece = 'K'; break;
+      case 'b': chessPiece = 'J'; break;
+      case 'q': chessPiece = 'M'; break;
+      case 'K': chessPiece = 'N'; break;
       default: break;
     };
 
@@ -389,14 +401,14 @@ app.get('/chess', (c) => {
 		pieces.lineWidth = 2;
 		pieces.textAlign = 'center';
 		pieces.lineWidth = 2;
-		pieces.font = '50px DejaVu';
+		pieces.font = '50px alpha2';
 		pieces.textAlign = 'center';
     
 		dragPiece = document.getElementById('dragCanvas').getContext('2d');
 		dragPiece.lineWidth = 2;
 		dragPiece.textAlign = 'center';
 		dragPiece.lineWidth = 2;
-		dragPiece.font = '50px DejaVu';
+		dragPiece.font = '50px alpha2';
 		dragPiece.textAlign = 'center';
 
     console.log('init');
