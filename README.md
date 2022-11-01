@@ -4,7 +4,7 @@
 
 [x] white pawns can move
 
-- legal moves for R, N, B, Q, K. 
+- legal moves for R, N, B, Q, K.
 
 - Check for doublecheck and check (can the active piece stop the check?) and pin
 

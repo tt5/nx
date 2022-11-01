@@ -10,17 +10,25 @@ app.get('/home', (c) => {
   //c.header('Cache-Control', 'private, max-age=60')
   return c.html(
     html`
-    <div
-      id="content-home" x-show="$store.contentCurrent == 'home'"
-    >
-      <p style="
+      <div
+        id="content-home"
+        x-show="$store.contentCurrent == 'home'"
+      >
+        <p
+          style="
         font-family: 'alpha2';
-      ">
-        ijklmn<br>
-        IJKLMN
-      </p>
-      content-home
-    <div>
+        width: 0;
+        height: 0;
+        padding: 0;
+        overflow: hidden;
+      "
+        >
+          ijklmn<br />
+          IJKLMN
+        </p>
+        content-home
+        <div></div>
+      </div>
     `
   );
 });
@@ -66,7 +74,7 @@ app.get('/chess', (c) => {
 					ctx.strokeText(chessPieceA, i*squareDim + squareDim/2 + pieceXOffset, j*squareDim + squareDim - pieceVerticalOffset);
 				};
 			};
-      `
+      `;
 
   const borderYellow = `
     pieces.fillStyle = 'yellow';
@@ -77,7 +85,7 @@ app.get('/chess', (c) => {
       pieces.fillStyle = lightSquare;
     };
 		pieces.fillRect(ctxX*squareDim+5, ctxY*squareDim+5, squareDim-10, squareDim-10);
-      `
+      `;
 
   const drawPiece = `
 					if (boardState[ctxX][ctxY][0] == 'b') {
@@ -97,45 +105,48 @@ app.get('/chess', (c) => {
 					};
 					pieces.fillText(chessPieceB, ctxX*squareDim + squareDim/2 + pieceXOffset, ctxY*squareDim + squareDim - pieceVerticalOffset);
 					pieces.strokeText(chessPieceB, ctxX*squareDim + squareDim/2 + pieceXOffset, ctxY*squareDim + squareDim - pieceVerticalOffset);
-          `
+          `;
 
   return c.html(
     html`
-<template x-teleport="#content">
-  <div
-    id="content-chess"
-    x-show="$store.contentCurrent == 'chess'"
-  >
-  <div
-    style="
+      <template x-teleport="#content">
+        <div
+          id="content-chess"
+          x-show="$store.contentCurrent == 'chess'"
+        >
+          <div
+            style="
       height: 50px;
     "
-  >&nbsp;</div>
-  <span
-    style="
+          >
+            &nbsp;
+          </div>
+          <span
+            style="
       display: inline-block;
       min-height: 405px;
       width: 50px;
     "
-  >&nbsp;</span>
-  <span
-    style="
+            >&nbsp;</span
+          >
+          <span
+            style="
       position: relative;
       height: 400px;
       width: 400px;
     "
-  >
-    <canvas
-      style="
+          >
+            <canvas
+              style="
         position: absolute;
         top: 0;
         left: 0;
         z-index: 0;
       "
-      id='boardCanvas'
-      width=400
-      height=400
-      x-data="{
+              id="boardCanvas"
+              width="400"
+              height="400"
+              x-data="{
         board: {}, 
         ctx: {}, 
         squareDim: 50,
@@ -166,7 +177,7 @@ app.get('/chess', (c) => {
           ['', '', '', '', '', '', '', ''],
         ],
       }"
-      x-init="
+              x-init="
         board = $el.getContext('2d');
         for (let i=0; i<8; i++) {
           for (let j=0; j<8; j++) {
@@ -185,20 +196,20 @@ app.get('/chess', (c) => {
         ctx = board;
         ${drawBoardState}
       "
-    >
-    </canvas>
+            >
+            </canvas>
 
-    <canvas
-     id='pieceCanvas'
-     width=400
-     height=400
-      style="
+            <canvas
+              id="pieceCanvas"
+              width="400"
+              height="400"
+              style="
         position: absolute;
         top: 0;
         left: 0;
         z-index: 2;
       "
-      x-data="{
+              x-data="{
         boardCanvas: {},
         board: {},
         pieces: {},
@@ -249,7 +260,7 @@ app.get('/chess', (c) => {
         lastTouched: false,
         movePartA: [9,9],
       }"
-      @mousedown="
+              @mousedown="
         lastPosX = Math.floor($event.offsetX/50);
         lastPosY = Math.floor($event.offsetY/50);
         if (boardState[lastPosX][lastPosY][0]=='w') {
@@ -358,7 +369,7 @@ app.get('/chess', (c) => {
         ${drawBoardState}
       }
       "
-      @mouseup="
+              @mouseup="
         if (drag != '') {
         $el.removeEventListener('mousemove', move);
 
@@ -429,7 +440,7 @@ app.get('/chess', (c) => {
           ${drawPiece}
         };
       "
-      x-init="
+              x-init="
         pieces = $el.getContext('2d');
         pieces.lineWidth = 2;
         pieces.textAlign = 'center';
@@ -442,23 +453,23 @@ app.get('/chess', (c) => {
 
         console.log('init');
       "
-    >
-    </canvas>
-<canvas
- id='dragCanvas'
- width=400
- height=400
-	style="
+            >
+            </canvas>
+            <canvas
+              id="dragCanvas"
+              width="400"
+              height="400"
+              style="
 		position: absolute;
 		top: 0;
 		left: 0;
 		z-index: 1;
 	"
->
-</canvas>
-</span>
-</div>
-</template>
+            >
+            </canvas>
+          </span>
+        </div>
+      </template>
     `
   );
 });
@@ -466,11 +477,14 @@ app.get('/chess', (c) => {
 app.get('/math', (c) => {
   return c.html(
     html`
-<template x-teleport="#content">
-<div id="content-math" x-show="$store.contentCurrent == 'math'">
-math-data
-</div>
-</template>
+      <template x-teleport="#content">
+        <div
+          id="content-math"
+          x-show="$store.contentCurrent == 'math'"
+        >
+          math-data
+        </div>
+      </template>
     `
   );
 });
@@ -478,11 +492,14 @@ math-data
 app.get('/notes', (c) => {
   return c.html(
     html`
-<template x-teleport="#content">
-<div id="content-notes" x-show="$store.contentCurrent == 'notes'">
-notes-data
-</div>
-</template>
+      <template x-teleport="#content">
+        <div
+          id="content-notes"
+          x-show="$store.contentCurrent == 'notes'"
+        >
+          notes-data
+        </div>
+      </template>
     `
   );
 });
