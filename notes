@@ -2,3 +2,6 @@ nx format:write --all
 npx nx g @andyjessop/cloudflare:worker content
 nx deploy content
 npx nx migrate latest
+nx migrate latest
+nx migrate --run-migrations
+rm migrations.json

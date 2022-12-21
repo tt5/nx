@@ -16,18 +16,19 @@ app.get('/home', (c) => {
       >
         <p
           style="
-        font-family: 'alpha2';
-        width: 0;
-        height: 0;
-        padding: 0;
-        overflow: hidden;
-      "
+            font-family: 'alpha2';
+            width: 0;
+            height: 0;
+            padding: 0;
+            overflow: hidden;
+          "
         >
-          ijklmn<br />
-          IJKLMN
+        ijklmn<br />
+        IJKLMN
         </p>
-        content-home
-        <div></div>
+        <section>
+        <a href="https://ill-calendar.surge.sh">notes</a>
+        </section>
       </div>
     `
   );
