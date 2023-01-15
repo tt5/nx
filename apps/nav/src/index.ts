@@ -48,6 +48,19 @@ app.get('/', (c) => {
           </div>
         </div>
         <div class="flex-grow"></div>
+        <div 
+          id="event"
+          class="flex-grow"
+          x-data='{event: "event", result: "result"}'
+          x-init='
+            event = new EventSource("https://tt15551.cc/events/event");
+            event.onmessage = function (e) {
+              result = e.data
+            };
+          '
+        >
+          <span x-text="result"></span>
+        </div>
         <div class="flex gap-2">
           <div
             x-data="{open: true}"

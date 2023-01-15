@@ -23,12 +23,46 @@ app.get('/home', (c) => {
             overflow: hidden;
           "
         >
-        ijklmn<br />
-        IJKLMN
+          ijklmn<br />
+          IJKLMN
         </p>
-        <section>
-        <a href="https://ill-calendar.surge.sh">notes</a>
+        <div class="grid grid-cols-[auto_1fr_auto]">
+        <div style="width: 20vw; height: 20vh;"></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <section class="flex flex-col px-2">
+          <div>
+            <a href="https://taupe-fudge-311cb1.netlify.app/">example</a>
+            &emsp;
+            react
+          </div>
+          <div>
+            <a href="https://astro-8s2.pages.dev">blog</a>
+            &emsp;
+            astro
+          </div>
+          <div>
+            <a href="https://next-tt5.vercel.app">example</a>
+            &emsp;
+            Next, supabase
+          </div>
+          <div>
+            <a href="https://t3-app-v0.vercel.app/">example</a>
+            &emsp;
+            t3-app
+          </div>
+          <div>
+            <a href="/projects/blog-first/">experiment</a>
+            &emsp;
+            fastify, graphviz, lua-lpeg, alpinejs
+          </div>
         </section>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        </div>
       </div>
     `
   );
