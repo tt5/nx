@@ -33,6 +33,11 @@ app.get('/home', (c) => {
         <div></div>
         <section class="flex flex-col px-2">
           <div>
+            <a href="https://tasteless-property.surge.sh/">notes</a>
+            &emsp;
+            vitepress, katex
+          </div>
+          <div>
             <a href="https://taupe-fudge-311cb1.netlify.app/">example</a>
             &emsp;
             react
@@ -334,7 +339,60 @@ app.get('/chess', (c) => {
                 legalState[lastPosX+1][lastPosY-1]='x';
               };
               break;
-            case 'r': console.log('rook'); break;
+            case 'r':
+              for (var i = lastPosY; i > 0; --i) {
+                if (boardState[lastPosX][i-1]=='') {
+                  legalState[lastPosX][i-1]='x';
+                } else {
+                  if (boardState[lastPosX][i-1][0]=='b') {
+                    legalState[lastPosX][i-1]='x';
+                    break;
+                  }
+                  if (boardState[lastPosX][i-1][0]=='w') {
+                    break;
+                  }
+                };
+              };
+              for (var i = lastPosY; i < 7; ++i) {
+                if (boardState[lastPosX][i+1]=='') {
+                  legalState[lastPosX][i+1]='x';
+                } else {
+                  if (boardState[lastPosX][i+1][0]=='b') {
+                    legalState[lastPosX][i+1]='x';
+                    break;
+                  }
+                  if (boardState[lastPosX][i+1][0]=='w') {
+                    break;
+                  }
+                };
+              };
+              for (var i = lastPosX; i > 0; --i) {
+                if (boardState[i-1][lastPosY]=='') {
+                  legalState[i-1][lastPosY]='x';
+                } else {
+                  if (boardState[i-1][lastPosY][0]=='b') {
+                    legalState[i-1][lastPosY]='x';
+                    break;
+                  }
+                  if (boardState[i-1][lastPosY][0]=='w') {
+                    break;
+                  }
+                };
+              };
+              for (var i = lastPosX; i < 7; ++i) {
+                if (boardState[i+1][lastPosY]=='') {
+                  legalState[i+1][lastPosY]='x';
+                } else {
+                  if (boardState[i+1][lastPosY][0]=='b') {
+                    legalState[i+1][lastPosY]='x';
+                    break;
+                  }
+                  if (boardState[i+1][lastPosY][0]=='w') {
+                    break;
+                  }
+                };
+              };
+              break;
             case 'k': console.log('knight'); break;
             case 'b': console.log('bishop'); break;
             case 'q': console.log('queen'); break;
