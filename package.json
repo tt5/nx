@@ -9,7 +9,6 @@
   },
   "private": true,
   "dependencies": {
-    "@andyjessop/cloudflare": "^0.0.4",
     "@nrwl/node": "15.4.4",
     "esbuild": "^0.16.13",
     "hono": "^2.7.1",

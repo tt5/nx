@@ -51,9 +51,9 @@ app.get('/', (c) => {
         <div 
           id="event"
           class="flex-grow"
-          x-data='{event: "event", result: "result"}'
+          x-data='{event: "event", result: "result", userid: $store.userid}'
           x-init='
-            event = new EventSource("https://tt15551.cc/events/event");
+            event = new EventSource("https://tt15551.cc/events/event/".concat(userid));
             event.onmessage = function (e) {
               result = e.data
             };

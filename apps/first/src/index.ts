@@ -51,6 +51,7 @@ app.get('/', async (c) => {
           <script>
             document.addEventListener('alpine:init', () => {
               Alpine.store('contentCurrent', 'home');
+              Alpine.store('userid', self.crypto.getRandomValues(new Uint32Array(1))[0]);
             });
           </script>
         </body>

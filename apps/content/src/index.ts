@@ -43,7 +43,7 @@ app.get('/home', (c) => {
             react
           </div>
           <div>
-            <a href="https://astro-8s2.pages.dev">blog</a>
+            <a href="https://dynamic-croquembouche-85ba82.netlify.app">blog</a>
             &emsp;
             astro
           </div>
